@@ -55,7 +55,7 @@ GO
 
   
   --===============| Adding CHECK Constraints |===============--
--- 'unit_price' : Must BE GREATER THAN ZERO.
+-- 'unit_price' : Must Be Positive.
 --==========================================================--
  
   ALTER TABLE dbo.Products 
