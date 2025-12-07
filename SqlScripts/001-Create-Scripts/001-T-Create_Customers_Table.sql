@@ -42,3 +42,12 @@ ALTER TABLE dbo.Customers ADD CONSTRAINT
 	CK_Customers_Age  
   CHECK (age BETWEEN 16 AND 120)
 GO
+
+
+/* Wire Customers -> PaymentMethods FK */
+
+ALTER TABLE dbo.Customers
+ADD CONSTRAINT FK_Customers_PaymentMethods
+FOREIGN KEY (preferred_payment_method_id)
+REFERENCES dbo.PaymentMethods(payment_method_id);
+GO
