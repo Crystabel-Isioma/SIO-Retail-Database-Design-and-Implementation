@@ -1,7 +1,7 @@
 USE SIO_Retail;
 GO
 
-/****** Object:  Table [dbo].[Customers]    Script Date: 8/10/2025 6:07:45 PM ******/
+/****** Object:  Table [dbo].[Orders]    Script Date: 8/10/2025 6:07:45 PM ******/
 SET ANSI_NULLS ON
 GO
 
