@@ -1,0 +1,40 @@
+CREATE OR ALTER VIEW dbo.vw_OrderOverview
+AS
+SELECT
+    o.order_id,
+    o.order_datetime,
+    o.status,
+    o.customer_id,
+    c.full_name AS customer_name,
+
+    -- product + line info
+    od.product_id,
+    p.product_name,
+    cat.category_name,
+    s.supplier_name,
+
+    od.quantity,
+    od.unit_price_at_order,
+    CAST(od.quantity * od.unit_price_at_order AS DECIMAL(12,2)) AS line_total,
+
+    -- order total across all products in the order
+    CAST(
+        SUM(od.quantity * od.unit_price_at_order)
+        OVER (PARTITION BY o.order_id)
+        AS DECIMAL(14,2)
+    ) AS order_total,
+
+    -- review 
+    pr.rating       AS review_rating,
+    pr.comment      AS review_comment,
+    pr.created_at   AS review_created_at
+FROM dbo.Orders        AS o
+JOIN dbo.Customers     AS c   ON c.customer_id   = o.customer_id
+JOIN dbo.OrderDetails  AS od  ON od.order_id     = o.order_id
+JOIN dbo.Products      AS p   ON p.product_id    = od.product_id
+JOIN dbo.Category      AS cat ON cat.category_id = p.category_id
+JOIN dbo.Suppliers     AS s   ON s.supplier_id   = p.supplier_id
+LEFT JOIN dbo.ProductReviews AS pr
+       ON pr.order_id    = o.order_id
+      AND pr.product_id  = p.product_id
+      AND pr.customer_id = o.customer_id;
