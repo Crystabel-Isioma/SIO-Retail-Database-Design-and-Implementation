@@ -5,6 +5,8 @@ GO
 SET ANSI_NULLS ON
 GO
 
+004-Procedure-SearchProductsByName.sql
+
 SET QUOTED_IDENTIFIER ON
 GO
 
